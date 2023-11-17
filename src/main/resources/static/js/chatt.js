@@ -17,7 +17,7 @@ var msg = getId('msg');
 
 btnLogin.onclick = function(){
     // 로그인 시 소켓 통신 시도
-    ws = new WebSocket("ws://" + location.host + "/chat");
+    ws = new WebSocket("ws://" + location.host + "/chat"); // WebSocketChat의 endpoint와 값이 같아야 됨
 
     // 메세지가 오면 작동하는 함수
     ws.onmessage = function(msg){
