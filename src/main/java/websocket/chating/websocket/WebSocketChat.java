@@ -13,8 +13,10 @@ import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
 @Service
-@ServerEndpoint(value="/chatt")
-public class WebSocketChatt {
+@ServerEndpoint(value="/chat")
+public class WebSocketChat {
+
+    // 사용자 세션 저장 집합
     private static Set<Session> clients =
             Collections.synchronizedSet(new HashSet<Session>());
 
@@ -23,7 +25,7 @@ public class WebSocketChatt {
         System.out.println("receive message : " + msg);
         for(Session s : clients) {
             System.out.println("send data : " + msg);
-            s.getBasicRemote().sendText(msg);
+            s.getBasicRemote().sendText(msg);   // 모든 사용자에게 메세지 전송
 
         }
     }
@@ -32,7 +34,7 @@ public class WebSocketChatt {
     public void onOpen(Session s) {
         System.out.println("open session : " + s.toString());
         if(!clients.contains(s)) {
-            clients.add(s);
+            clients.add(s); // 연결시 사용자 세션 정보 저장
             System.out.println("session open : " + s);
         }else {
             System.out.println("이미 연결된 session 임!!!");
@@ -42,7 +44,7 @@ public class WebSocketChatt {
     @OnClose // 클라이언트가 브라우저를 끄거나 다른 경로로 이동할 때
     public void onClose(Session s) {
         System.out.println("session close : " + s);
-        clients.remove(s);
+        clients.remove(s);  // 세션 삭제
 
 
     }

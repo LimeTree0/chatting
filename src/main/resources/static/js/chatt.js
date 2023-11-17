@@ -16,8 +16,10 @@ var talk = getId('talk');
 var msg = getId('msg');
 
 btnLogin.onclick = function(){
-    ws = new WebSocket("ws://" + location.host + "/chatt");
+    // 로그인 시 소켓 통신 시도
+    ws = new WebSocket("ws://" + location.host + "/chat");
 
+    // 메세지가 오면 작동하는 함수
     ws.onmessage = function(msg){
         var data = JSON.parse(msg.data);
         var css;
@@ -39,7 +41,7 @@ btnLogin.onclick = function(){
 }
 
 msg.onkeyup = function(ev){
-    if(ev.keyCode == 13){
+    if(ev.keyCode === 13){
         send();
     }
 }
